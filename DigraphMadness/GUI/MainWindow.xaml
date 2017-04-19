@@ -14,7 +14,9 @@
         </Grid.ColumnDefinitions>
 
         <Border BorderThickness="1" BorderBrush="LightGray">
-            <Canvas Name="mainCanvas" Grid.Column="0" Height="{Binding ElementName=mainWindow, Path=Height}" Width="{Binding ElementName=col1, Path=Width}" />
+            <Canvas Name="mainCanvas" Grid.Column="0" Height="{Binding ElementName=mainWindow, Path=Height}" Width="{Binding ElementName=col1, Path=Width}">
+                
+            </Canvas>
         </Border>
 
         <Border BorderThickness="1" BorderBrush="LightGray" Grid.Column="1" >
@@ -62,6 +64,8 @@
                     <xtlk:ColorPicker Name="colorPickerLines" AdvancedButtonHeader="Zaawansowane" AvailableColorsHeader="Dostępne kolory" 
                                       StandardButtonHeader="Standardowe" StandardColorsHeader="Kolory standardowe" SelectedColorChanged="colorPickerLines_SelectedColorChanged"/>
                 </DockPanel>
+
+                
             </StackPanel>
         </Border>
     </Grid>

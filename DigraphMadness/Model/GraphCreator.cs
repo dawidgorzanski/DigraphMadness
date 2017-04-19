@@ -31,6 +31,11 @@ namespace DigraphMadness.Model
 
         public static Graph CreateRandomGraphProbability(int Nodes, double Probability) // G(n, p)
         {
+            if (Probability > 0.99)
+            {
+                return GraphCreator.CreateFullGraph(Nodes);
+            }
+
             Graph randomGraph = new Graph();
             for (int i = 0; i < Nodes; i++)
                 randomGraph.Nodes.Add(new Node() { ID = i });
@@ -38,22 +43,24 @@ namespace DigraphMadness.Model
             double currentProbability;
             for (int i = 0; i < Nodes; i++)
             {
-                for (int j = i + 1; j < Nodes; j++)
+                for (int j = 0; j < Nodes; j++)
                 {
-                    currentProbability = rnd.NextDouble();
-                    if (currentProbability < Probability)
+                    if (j != i)
                     {
-                        Connection connection = new Connection();
-                        connection.Node1 = randomGraph.Nodes.FirstOrDefault(x => x.ID == i);
-                        connection.Node2 = randomGraph.Nodes.FirstOrDefault(x => x.ID == j);
-                        randomGraph.Connections.Add(connection);
-                    }
+                        currentProbability = rnd.NextDouble();
+                        if (currentProbability < Probability)
+                        {
+                            Connection connection = new Connection();
+                            connection.Node1 = randomGraph.Nodes.FirstOrDefault(x => x.ID == i);
+                            connection.Node2 = randomGraph.Nodes.FirstOrDefault(x => x.ID == j);
+                            randomGraph.Connections.Add(connection);
+                        }
+                    }                   
                 }
             }
             return randomGraph;
         }
 
-        //Zerknijcie na tworzenie połączeń :D
         public static Graph CreateFullGraph(int Nodes = 0)
         {
             Graph fullGraph = new Graph();
@@ -65,17 +72,20 @@ namespace DigraphMadness.Model
             //Dodanie połączeń między wierzchołkami
             for (int i = 0; i < Nodes; i++)
             {
-                for (int j = i + 1; j < Nodes; j++)
+                for (int j = 0; j < Nodes; j++)
                 {
-                    Connection connection = new Connection();
-                    //Nie tworzymy nowych obiektów typu Node, tylko wyszukujemy w Nodes już istniejące - znacznie ułatwia
-                    //to rysowanie grafu - każdy obiekt Node dostaje później swoje współrzędne, ktore w obu listach są takie same.
-                    //Jeżeli utworzylibyśmy nowy obiekt to po dodaniu współrzędnych obiektom w Nodes, w Connection nie
-                    //zostałyby one zmienione.
-                    //(x => x.ID == i) jest to tzw. wyrażenie Lambda - w tym wypadku szukamy pierwszego elementu o ID równym i.
-                    connection.Node1 = fullGraph.Nodes.FirstOrDefault(x => x.ID == i);
-                    connection.Node2 = fullGraph.Nodes.FirstOrDefault(x => x.ID == j);
-                    fullGraph.Connections.Add(connection);
+                    if (i != j)
+                    {
+                        Connection connection = new Connection();
+                        //Nie tworzymy nowych obiektów typu Node, tylko wyszukujemy w Nodes już istniejące - znacznie ułatwia
+                        //to rysowanie grafu - każdy obiekt Node dostaje później swoje współrzędne, ktore w obu listach są takie same.
+                        //Jeżeli utworzylibyśmy nowy obiekt to po dodaniu współrzędnych obiektom w Nodes, w Connection nie
+                        //zostałyby one zmienione.
+                        //(x => x.ID == i) jest to tzw. wyrażenie Lambda - w tym wypadku szukamy pierwszego elementu o ID równym i.
+                        connection.Node1 = fullGraph.Nodes.FirstOrDefault(x => x.ID == i);
+                        connection.Node2 = fullGraph.Nodes.FirstOrDefault(x => x.ID == j);
+                        fullGraph.Connections.Add(connection);
+                    }                  
                 }
             }
 

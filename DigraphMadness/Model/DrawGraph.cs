@@ -5,22 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace DigraphMadness.Model
 {
     public class DrawGraph
     {
-        private List<Line> _lines;
         private Canvas _canvas;
 
-        public List<Line> Lines
-        {
-            get
-            {
-                return _lines;
-            }
-        }
         public Graph CurrentGraph { get; set; }
         public int Radius { get; set; }
         public int NodeRadius { get; set; }
@@ -29,13 +22,6 @@ namespace DigraphMadness.Model
         {
             this.CurrentGraph = graph;
             this._canvas = canvas;
-            InitializeLists();
-        }
-
-        //inicjalizacja _nodesPoints oraz _lines
-        private void InitializeLists()
-        {
-            _lines = new List<Line>();
         }
 
         //rysowanie głównego koła
@@ -75,6 +61,14 @@ namespace DigraphMadness.Model
                 Canvas.SetLeft(ellipse, x);
                 Canvas.SetTop(ellipse, y);
                 _canvas.Children.Add(ellipse);
+
+                Label label = new Label();
+                label.Height = 50;
+                label.Width = 50;
+                label.Content = CurrentGraph.Nodes[i].ID;
+                Canvas.SetLeft(label, x - 15);
+                Canvas.SetTop(label, y - 15);
+                _canvas.Children.Add(label);
             }
         }
 
@@ -90,31 +84,70 @@ namespace DigraphMadness.Model
             //Rysowanie linii
             foreach (Connection connection in CurrentGraph.Connections)
             {
-                DrawLine(connection.Node1.PointOnScreen, connection.Node2.PointOnScreen);
+                DrawArrow(connection);
             }
 
             return true;
         }
 
         //rysowanie linii od punktu node1 do punktu node2
-        private void DrawLine(Point node1, Point node2)
+        private void DrawArrow(Connection connection)
         {
-            Line line = new Line();
-            line.StrokeThickness = 1;
-            line.SetResourceReference(Line.StrokeProperty, "ColorLines");
-            line.X1 = node1.X + NodeRadius / 2;
-            line.X2 = node2.X + NodeRadius / 2;
-            line.Y1 = node1.Y + NodeRadius / 2;
-            line.Y2 = node2.Y + NodeRadius / 2;
+            Point p1 = new Point(connection.Node1.PointOnScreen.X + NodeRadius / 2, connection.Node1.PointOnScreen.Y + NodeRadius / 2);
+            Point p2 = new Point(connection.Node2.PointOnScreen.X + NodeRadius / 2, connection.Node2.PointOnScreen.Y + NodeRadius / 2);
+
+            GeometryGroup lineGroup = new GeometryGroup();
+            double theta = Math.Atan2((p2.Y - p1.Y), (p2.X - p1.X)) * 180 / Math.PI;
+
+            PathGeometry pathGeometry = new PathGeometry();
+            PathFigure pathFigure = new PathFigure();
+            Point p = new Point(p1.X + ((p2.X - p1.X) / 1.35), p1.Y + ((p2.Y - p1.Y) / 1.35));
+            pathFigure.StartPoint = p;
+
+            Point lpoint = new Point(p.X + 6, p.Y + 15);
+            Point rpoint = new Point(p.X - 6, p.Y + 15);
+            LineSegment seg1 = new LineSegment();
+            seg1.Point = lpoint;
+            pathFigure.Segments.Add(seg1);
+
+            LineSegment seg2 = new LineSegment();
+            seg2.Point = rpoint;
+            pathFigure.Segments.Add(seg2);
+
+            LineSegment seg3 = new LineSegment();
+            seg3.Point = p;
+            pathFigure.Segments.Add(seg3);
+
+            pathGeometry.Figures.Add(pathFigure);
+
+            RotateTransform transform = new RotateTransform();
+            transform.Angle = theta + 90;
+            transform.CenterX = p.X;
+            transform.CenterY = p.Y;
+            pathGeometry.Transform = transform;
+            lineGroup.Children.Add(pathGeometry);
+
+            LineGeometry connectorGeometry = new LineGeometry();
+            connectorGeometry.StartPoint = p1;
+            connectorGeometry.EndPoint = p2;
+            lineGroup.Children.Add(connectorGeometry);
+
+            Path path = new Path();
+            path.Data = lineGroup;
+            path.StrokeThickness = 1.0;
+            path.Stroke = path.Fill = Brushes.Black;
+
             //Insert() zamiast Add(), aby linie były "pod spodem" - liczy się kolejność dodawania, im dalej na liście tym "wyżej"
-            _canvas.Children.Insert(0, line);
+            _canvas.Children.Insert(0, path);
         }
 
-        public void ClearAll()
+        public void ClearAll(bool OnlyView = true)
         {
+            //OnlyView - czyści tylko "rysunek"
             //żeby nie było null
-            CurrentGraph = GraphCreator.CreateFullGraph();
-            _lines.Clear();
+            if (!OnlyView)
+                CurrentGraph = GraphCreator.CreateFullGraph();
+
             _canvas.Children.Clear();
         }
     }
