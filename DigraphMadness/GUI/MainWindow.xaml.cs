@@ -32,7 +32,6 @@ namespace DigraphMadness
         private void InitializeColorPickers()
         {
             colorPickerCircle.SelectedColor = Colors.Green;
-            colorPickerLines.SelectedColor = Colors.Black;
             colorPickerPoints.SelectedColor = Colors.Red;
         }
 
@@ -68,11 +67,6 @@ namespace DigraphMadness
         private void colorPickerCircle_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             Resources["ColorCircle"] = new SolidColorBrush((Color)colorPickerCircle.SelectedColor);
-        }
-
-        private void colorPickerLines_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            Resources["ColorLines"] = new SolidColorBrush((Color)colorPickerLines.SelectedColor);
         }
 
         private void btnOpenFromFile_Click(object sender, RoutedEventArgs e)

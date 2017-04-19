@@ -59,13 +59,6 @@
                     <xtlk:ColorPicker Name="colorPickerCircle" AdvancedButtonHeader="Zaawansowane" AvailableColorsHeader="Dostępne kolory" 
                                       StandardButtonHeader="Standardowe" StandardColorsHeader="Kolory standardowe" SelectedColorChanged="colorPickerCircle_SelectedColorChanged"/>
                 </DockPanel>
-                <DockPanel>
-                    <Label Content="Kolor linii: " Width="105"/>
-                    <xtlk:ColorPicker Name="colorPickerLines" AdvancedButtonHeader="Zaawansowane" AvailableColorsHeader="Dostępne kolory" 
-                                      StandardButtonHeader="Standardowe" StandardColorsHeader="Kolory standardowe" SelectedColorChanged="colorPickerLines_SelectedColorChanged"/>
-                </DockPanel>
-
-                
             </StackPanel>
         </Border>
     </Grid>
