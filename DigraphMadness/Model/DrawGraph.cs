@@ -65,6 +65,7 @@ namespace DigraphMadness.Model
                 Label label = new Label();
                 label.Height = 50;
                 label.Width = 50;
+                label.FontWeight = FontWeights.Bold;
                 label.Content = CurrentGraph.Nodes[i].ID;
                 Canvas.SetLeft(label, x - 15);
                 Canvas.SetTop(label, y - 15);
@@ -135,10 +136,17 @@ namespace DigraphMadness.Model
             Path path = new Path();
             path.Data = lineGroup;
             path.StrokeThickness = 1.0;
-            path.Stroke = path.Fill = Brushes.Black;
+            path.Stroke = path.Fill = Brushes.Blue;
 
             //Insert() zamiast Add(), aby linie były "pod spodem" - liczy się kolejność dodawania, im dalej na liście tym "wyżej"
             _canvas.Children.Insert(0, path);
+
+            Label label = new Label();
+            label.Foreground = Brushes.Black;
+            label.Content = connection.Weight;
+            Canvas.SetLeft(label, p.X);
+            Canvas.SetTop(label, p.Y);
+            _canvas.Children.Add(label);
         }
 
         public void ClearAll(bool OnlyView = true)

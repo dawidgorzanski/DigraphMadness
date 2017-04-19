@@ -8,11 +8,11 @@ namespace DigraphMadness.Model
 {
     public static class GraphCreator
     {
-
         public static Graph CreateFromMatrix(int[,] MatrixInt)
         {
             int Dimension = MatrixInt.GetLength(0);
             Graph fromMatrix = new Graph();
+            Random random = new Random();
 
             for (int i = 0; i < Dimension; i++)
                 fromMatrix.Nodes.Add(new Node() { ID = i });
@@ -22,7 +22,7 @@ namespace DigraphMadness.Model
                 {
                     if (MatrixInt[i, j] == 1)
                     {
-                        fromMatrix.Connections.Add(new Connection { Node1 = fromMatrix.Nodes[i], Node2 = fromMatrix.Nodes[j] });
+                        fromMatrix.Connections.Add(new Connection { Node1 = fromMatrix.Nodes[i], Node2 = fromMatrix.Nodes[j], Weight = random.Next(-5, 11) });
                     }
                 }
             }
@@ -37,6 +37,8 @@ namespace DigraphMadness.Model
             }
 
             Graph randomGraph = new Graph();
+            Random random = new Random();
+
             for (int i = 0; i < Nodes; i++)
                 randomGraph.Nodes.Add(new Node() { ID = i });
             Random rnd = new Random();
@@ -53,6 +55,7 @@ namespace DigraphMadness.Model
                             Connection connection = new Connection();
                             connection.Node1 = randomGraph.Nodes.FirstOrDefault(x => x.ID == i);
                             connection.Node2 = randomGraph.Nodes.FirstOrDefault(x => x.ID == j);
+                            connection.Weight = random.Next(-5, 11);
                             randomGraph.Connections.Add(connection);
                         }
                     }                   
@@ -64,7 +67,7 @@ namespace DigraphMadness.Model
         public static Graph CreateFullGraph(int Nodes = 0)
         {
             Graph fullGraph = new Graph();
-
+            Random random = new Random();
             //Dodanie wierzchołków
             for (int i = 0; i < Nodes; i++)
                 fullGraph.Nodes.Add(new Node() { ID = i });
@@ -84,6 +87,7 @@ namespace DigraphMadness.Model
                         //(x => x.ID == i) jest to tzw. wyrażenie Lambda - w tym wypadku szukamy pierwszego elementu o ID równym i.
                         connection.Node1 = fullGraph.Nodes.FirstOrDefault(x => x.ID == i);
                         connection.Node2 = fullGraph.Nodes.FirstOrDefault(x => x.ID == j);
+                        connection.Weight = random.Next(-5, 11);
                         fullGraph.Connections.Add(connection);
                     }                  
                 }

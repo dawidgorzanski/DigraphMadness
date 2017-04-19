@@ -10,5 +10,6 @@ namespace DigraphMadness.Model
     {
         public Node Node1 { get; set; }
         public Node Node2 { get; set; }
+        public int Weight { get; set; }
     }
 }
