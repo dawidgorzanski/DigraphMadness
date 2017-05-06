@@ -46,6 +46,7 @@
                         <Button Name="btnOpenFromFile" Content="Otwórz plik..." Click="btnOpenFromFile_Click" />
                         <Button Name="btnSaveToFile" Content="Zapisz do pliku..." Click="btnSaveToFile_Click" Margin="0,5,0,0"/>
                         <Button Name="btnClear" Content="Wyczyść" Margin="0,5,0,5" Click="btnClear_Click" />
+                        <Button Name="btnKosaraju" Content="Silne skłdowe" Margin="0,5,0,5" Click="btnKosaraju_Click" />
                     </StackPanel>
                 </GroupBox>
 

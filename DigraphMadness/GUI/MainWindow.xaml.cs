@@ -129,5 +129,9 @@ namespace DigraphMadness
                 }
             }
         }
+        private void btnKosaraju_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(Kosaraju.KosarajuAlgorithm(draw.CurrentGraph));
+        }
     }
 }

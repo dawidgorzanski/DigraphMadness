@@ -63,7 +63,7 @@ namespace DigraphMadness.Model
             for (int i = 0; i < _connections.Count; i++)
             {
                 Matrix[_connections[i].Node1.ID, _connections[i].Node2.ID] = 1;
-                Matrix[_connections[i].Node2.ID, _connections[i].Node1.ID] = 1;
+                //Matrix[_connections[i].Node2.ID, _connections[i].Node1.ID] = 1;
             }
             for (int i = 0; i < Dimension; i++)
             {
@@ -125,6 +125,17 @@ namespace DigraphMadness.Model
             }
 
             return finalString;
+        }
+        public int[,] ToMatrix()
+        {
+            int Dimension = _nodes.Count;
+            int[,] Matrix = new int[Dimension, Dimension];
+            for (int i = 0; i < _connections.Count; i++)
+            {
+                Matrix[_connections[i].Node1.ID, _connections[i].Node2.ID] = 1;
+                //Matrix[_connections[i].Node2.ID, _connections[i].Node1.ID] = 1;
+            }
+            return Matrix;
         }
 
     }
