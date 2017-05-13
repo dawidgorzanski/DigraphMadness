@@ -126,6 +126,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BellmanFord.cs" />
     <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\DrawGraph.cs" />
     <Compile Include="Model\Graph.cs" />
