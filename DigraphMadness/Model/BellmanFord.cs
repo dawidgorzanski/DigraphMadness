@@ -19,7 +19,6 @@ namespace DigraphMadness.Model
             if (!isNoCycle)
             {
                 string str = "W grafie wystepuje ujemny cykl";
-                str += "\n" + String.Join(", ", d);
                 return str;
             }
             string finalString = "Koszt dojscia do kazdego z wierzcholkow:";
