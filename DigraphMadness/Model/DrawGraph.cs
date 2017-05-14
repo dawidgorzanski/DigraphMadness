@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -17,6 +18,15 @@ namespace DigraphMadness.Model
         public Graph CurrentGraph { get; set; }
         public int Radius { get; set; }
         public int NodeRadius { get; set; }
+
+        public event EventHandler NodeClicked;
+        protected virtual void OnNodeClicked(Node clickedNode)
+        {
+            var handler = NodeClicked;
+            if (handler != null)
+                handler(clickedNode, EventArgs.Empty);
+        }
+
 
         public DrawGraph(Canvas canvas, Graph graph)
         {
@@ -67,6 +77,10 @@ namespace DigraphMadness.Model
                 label.Width = 50;
                 label.FontWeight = FontWeights.Bold;
                 label.Content = CurrentGraph.Nodes[i].ID;
+                label.DataContext = CurrentGraph.Nodes[i];
+                label.MouseEnter += Label_MouseEnter;
+                label.MouseLeave += Label_MouseLeave;
+                label.MouseLeftButtonUp += Label_MouseLeftButtonUp;
                 Canvas.SetLeft(label, x - 15);
                 Canvas.SetTop(label, y - 15);
                 _canvas.Children.Add(label);
@@ -157,6 +171,22 @@ namespace DigraphMadness.Model
                 CurrentGraph = GraphCreator.CreateFullGraph();
 
             _canvas.Children.Clear();
+        }
+
+        private void Label_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Node clickedNode = ((Label)sender).DataContext as Node;
+            OnNodeClicked(clickedNode);
+        }
+
+        private void Label_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
+        }
+
+        private void Label_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace DigraphMadness.Model
                 {
                     if (firstMatrix[i, j] == 1 && !isVisited[i])
                     {
-                        firstMatrix = setTimeOfConvert(firstMatrix, i);
+                        firstMatrix = SetTimeOfConvert(firstMatrix, i);
                         //break;
                     }
                 }
@@ -61,21 +61,21 @@ namespace DigraphMadness.Model
             {
                 foreach (int number in l)
                 {
-                    finalString = finalString + number;
+                    finalString = finalString + " " + number;
                     arrayToCheck[number] = 1;
                 }
-                finalString = finalString + "\n";
+                finalString = finalString + Environment.NewLine;
             }
             //jeżeli jakiś wierzchołemk nie miał połączeń to go dopisuje na końcu
             for(int i=0;i<size;i++)
             {
                 if(arrayToCheck[i]==0)
-                    finalString = finalString + i+ "\n";
+                    finalString = finalString + i+ Environment.NewLine;
             }
             
             return finalString;
         }
-        public static int[,] setTimeOfConvert(int[,] firstMatrix, int index)
+        private static int[,] SetTimeOfConvert(int[,] firstMatrix, int index)
         {
 
             int size = firstMatrix.GetLength(0);
@@ -85,7 +85,7 @@ namespace DigraphMadness.Model
                 {
                     firstMatrix[index, j] = 0;
                     isVisited[index] = true;
-                    firstMatrix = setTimeOfConvert(firstMatrix, j);
+                    firstMatrix = SetTimeOfConvert(firstMatrix, j);
                 }
             }
             staticArray[staticIndex] = index;
@@ -93,7 +93,7 @@ namespace DigraphMadness.Model
             isVisited[index] = true;
             return firstMatrix;
         }
-        public static int[,] CreateStack(int[,] transponeMatrix, int index)
+        private static int[,] CreateStack(int[,] transponeMatrix, int index)
         {
             int size = transponeMatrix.GetLength(0);
             for (int j = 0; j < size; j++)
@@ -108,7 +108,7 @@ namespace DigraphMadness.Model
             }
             return transponeMatrix;
         }
-        public static int[,] TransponeMatrix(int[,] firstMatrix)
+        private static int[,] TransponeMatrix(int[,] firstMatrix)
             {
                 int size = firstMatrix.GetLength(0);
                 int[,] finalMatrix = new int[size, size];

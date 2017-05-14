@@ -27,6 +27,13 @@ namespace DigraphMadness
             InitializeComponent();
             InitializeColorPickers();
             draw = new DrawGraph(mainCanvas, GraphCreator.CreateFullGraph());
+            draw.NodeClicked += Draw_NodeClicked;
+        }
+
+        private void Draw_NodeClicked(object sender, EventArgs e)
+        {
+            Node clickedNode = sender as Node;
+            MessageBox.Show(BellmanFord.Algorithm(clickedNode.ID, draw.CurrentGraph), "Bellman - Ford");
         }
 
         private void InitializeColorPickers()
@@ -69,69 +76,9 @@ namespace DigraphMadness
             Resources["ColorCircle"] = new SolidColorBrush((Color)colorPickerCircle.SelectedColor);
         }
 
-        private void btnOpenFromFile_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            openFileDialog.Multiselect = false;
-            openFileDialog.Filter = "Pliki tekstowe | *.txt|Wszystkie pliki |*.*";
-
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                int[,] graphMatrix;
-                if (SaveOpenGraph.ReadFromFile(openFileDialog.FileName, out graphMatrix))
-                {
-                    draw.ClearAll();
-
-                    draw.CurrentGraph = GraphCreator.CreateFromMatrix(graphMatrix);
-
-                    draw.NodeRadius = (int)sliderNodeRadius.Value;
-                    draw.Radius = (int)sliderRadius.Value;
-
-                    draw.DrawMainCircle();
-                    draw.Draw();
-                }
-                else
-                {
-                    MessageBox.Show("Błędna zawartość pliku!", "Błąd");
-                }
-            }
-        }
-
-        private void btnSaveToFile_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            saveFileDialog.Filter = "Macierz |*.txt|Lista |*.txt|Macierz incydencji |*.txt";
-
-            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                switch (saveFileDialog.FilterIndex)
-                {
-                    case 1:
-                        {
-                            SaveOpenGraph.SaveToFile(saveFileDialog.FileName, draw.CurrentGraph.ToMatrixString());
-                            break;
-                        }
-                    case 2:
-                        {
-                            SaveOpenGraph.SaveToFile(saveFileDialog.FileName, draw.CurrentGraph.ToListString());
-                            break;
-                        }
-                    case 3:
-                        {
-                            SaveOpenGraph.SaveToFile(saveFileDialog.FileName, draw.CurrentGraph.ToIncidenceMatrixString());
-                            break;
-                        }
-                    default:
-                        {
-                            SaveOpenGraph.SaveToFile(saveFileDialog.FileName, draw.CurrentGraph.ToMatrixString());
-                            break;
-                        }
-                }
-            }
-        }
         private void btnKosaraju_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Kosaraju.KosarajuAlgorithm(draw.CurrentGraph));
+            MessageBox.Show(Kosaraju.KosarajuAlgorithm(draw.CurrentGraph), "Silne składowe");
         }
     }
 }
