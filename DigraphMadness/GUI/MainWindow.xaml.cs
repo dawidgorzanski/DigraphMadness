@@ -33,7 +33,7 @@ namespace DigraphMadness
         private void Draw_NodeClicked(object sender, EventArgs e)
         {
             Node clickedNode = sender as Node;
-            MessageBox.Show(BellmanFord.Algorithm(clickedNode.ID, draw.CurrentGraph), "Bellman - Ford");
+            MessageBox.Show(BellmanFord.Algorithm(clickedNode.ID, draw.CurrentGraph), "Odległości dla wierzchołka " + clickedNode.ID);
         }
 
         private void InitializeColorPickers()

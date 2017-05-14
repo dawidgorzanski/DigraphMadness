@@ -55,7 +55,12 @@ namespace DigraphMadness.Model
                             Connection connection = new Connection();
                             connection.Node1 = randomGraph.Nodes.FirstOrDefault(x => x.ID == i);
                             connection.Node2 = randomGraph.Nodes.FirstOrDefault(x => x.ID == j);
-                            connection.Weight = random.Next(-5, 11);
+                            int weight = random.Next(-5, 11);
+                            if (weight < 0)
+                            {
+                                weight = random.Next(-5, 11);
+                            }
+                            connection.Weight = weight;
                             randomGraph.Connections.Add(connection);
                         }
                     }                   
