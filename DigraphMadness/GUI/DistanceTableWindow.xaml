@@ -1,0 +1,11 @@
+﻿<Window x:Class="DigraphMadness.GUI.DistanceTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DigraphMadness.GUI"
+        mc:Ignorable="d"
+        Title="Macierz odległości" Height="480" Width="640" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        Icon="/DigraphMadness;component/Graphics/icon.ico">
+    <Grid Name="gDistanceTable" Margin="5"/>
+</Window>
