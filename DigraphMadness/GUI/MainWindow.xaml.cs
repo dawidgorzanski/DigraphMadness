@@ -1,4 +1,5 @@
-﻿using DigraphMadness.Model;
+﻿using DigraphMadness.GUI;
+using DigraphMadness.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,35 @@ namespace DigraphMadness
         private void btnKosaraju_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(Kosaraju.KosarajuAlgorithm(draw.CurrentGraph), "Silne składowe");
+        }
+
+        private void btnJohnson_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Johnson.isEveryNodeConnected(draw.CurrentGraph))
+            {
+                MessageBox.Show("Uzyty graf musi byc spojny!", "Błąd!");
+                return;
+            }
+
+            if (draw.CurrentGraph.Nodes.Count != 0)
+            {
+                Graph CurrentGraphCopy = Graph.MakeGraphCopy(draw.CurrentGraph);
+                if (Johnson.Johnson_Algorithm(ref CurrentGraphCopy))
+                {
+                    DistanceTableWindow distanceTableWindow = new DistanceTableWindow(Johnson.MatrixOfShortestsPaths(CurrentGraphCopy));  
+                    distanceTableWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Na tym grafie istnieje ujemny cykl!", "Błąd!");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Probujesz wywolac algorytm bez grafu!", "Błąd!");
+                return;
+            }
         }
     }
 }

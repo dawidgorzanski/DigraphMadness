@@ -15,7 +15,7 @@
 
         <Border BorderThickness="1" BorderBrush="LightGray">
             <Canvas Name="mainCanvas" Grid.Column="0" Height="{Binding ElementName=mainWindow, Path=Height}" Width="{Binding ElementName=col1, Path=Width}">
-                
+
             </Canvas>
         </Border>
 
@@ -44,6 +44,7 @@
                 <GroupBox Header="Operacje">
                     <StackPanel>
                         <Button Name="btnKosaraju" Content="Silne składowe" Click="btnKosaraju_Click" />
+                        <Button x:Name="btnJohnson" Content="Macierz odległości (Johnson)" Click="btnJohnson_Click" />
                         <Button Name="btnClear" Content="Wyczyść" Margin="0,5,0,0" Click="btnClear_Click" />
                     </StackPanel>
                 </GroupBox>

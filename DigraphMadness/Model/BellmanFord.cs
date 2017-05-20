@@ -52,7 +52,7 @@ namespace DigraphMadness.Model
             return finalString;
         }
 
-        private static bool BellmanFordAlgorithm(Graph graph, int source, List<int> nodesPredecessors, List<int> d)
+        public static bool BellmanFordAlgorithm(Graph graph, int source, List<int> nodesPredecessors, List<int> d)
         {
             for (int i = 0; i < graph.Nodes.Count; i++)
             {

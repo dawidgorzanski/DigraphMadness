@@ -38,6 +38,26 @@ namespace DigraphMadness.Model
             _nodes = new List<Node>();
         }
 
+        public static Graph MakeGraphCopy(Graph OriginalGraph)
+        {
+            Graph myGraphCopy = new Graph();
+            for (int i = 0; i < OriginalGraph.Nodes.Count; i++) //Kopiuje wierzcholki grafu do jego kopii
+            {
+                myGraphCopy.AddNode(OriginalGraph.Nodes[i]);
+            }
+
+            for (int i = 0; i < OriginalGraph.Connections.Count; i++) //Kopiuje krawedzie grafu do jego kopii
+            {
+                Connection copiedConnection = new Connection();
+                copiedConnection.Node1 = OriginalGraph.Connections[i].Node1;
+                copiedConnection.Node2 = OriginalGraph.Connections[i].Node2;
+                copiedConnection.Weight = OriginalGraph.Connections[i].Weight;
+                myGraphCopy.AddConnection(copiedConnection);
+            }
+
+            return myGraphCopy;
+        }
+
         //statyczna metoda obliczająca ile może być maksymalnie połączeń
         public static int MaxConnections(int Nodes)
         {
