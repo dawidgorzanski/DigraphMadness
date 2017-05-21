@@ -59,6 +59,8 @@ namespace DigraphMadness.Model
                             if (weight < 0)
                             {
                                 weight = random.Next(-5, 11);
+                                if (weight < 0)
+                                    weight = random.Next(-5, 11);
                             }
                             connection.Weight = weight;
                             randomGraph.Connections.Add(connection);

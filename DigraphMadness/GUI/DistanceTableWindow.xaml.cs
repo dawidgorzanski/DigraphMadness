@@ -48,7 +48,7 @@ namespace DigraphMadness.GUI
                     else
                         textBlock.Foreground = Brushes.Black;
 
-                    textBlock.FontSize = 200 / matrixOfShortestPaths.Count();
+                    textBlock.FontSize = 20;
                     textBlock.FontWeight = FontWeights.Bold;
                     textBlock.VerticalAlignment = VerticalAlignment.Center;
                     textBlock.HorizontalAlignment = HorizontalAlignment.Center;
