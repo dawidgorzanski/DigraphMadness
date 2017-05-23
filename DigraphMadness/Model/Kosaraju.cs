@@ -16,7 +16,7 @@ namespace DigraphMadness.Model
             static int indexOfStack;
             static bool[] isVisited;
 
-        public static string KosarajuAlgorithm(Graph graph)
+        public static List<List<int>> KosarajuAlgorithm(Graph graph)
         {
             //będę tworzył matrix na postawie grafu ale narazie otrzymuje macierz
              int[,] firstMatrix = graph.ToMatrix();
@@ -54,26 +54,7 @@ namespace DigraphMadness.Model
 
                 }
             }
-            //składam mój stos w listę
-            int[] arrayToCheck = new int[size];
-            string finalString = "";
-            foreach (List<int> l in ListOfStack)
-            {
-                foreach (int number in l)
-                {
-                    finalString = finalString + " " + number;
-                    arrayToCheck[number] = 1;
-                }
-                finalString = finalString + Environment.NewLine;
-            }
-            //jeżeli jakiś wierzchołemk nie miał połączeń to go dopisuje na końcu
-            for(int i=0;i<size;i++)
-            {
-                if(arrayToCheck[i]==0)
-                    finalString = finalString + i+ Environment.NewLine;
-            }
-            
-            return finalString;
+            return ListOfStack;
         }
         private static int[,] SetTimeOfConvert(int[,] firstMatrix, int index)
         {

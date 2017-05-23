@@ -78,15 +78,35 @@ namespace DigraphMadness
         }
 
         private void btnKosaraju_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(Kosaraju.KosarajuAlgorithm(draw.CurrentGraph), "Silne składowe");
+        { 
+            int size = draw.CurrentGraph.Nodes.Count;
+            int[] arrayToCheck = new int[size];
+            string finalString = "";
+            List<List<int>> ListOfStack = Kosaraju.KosarajuAlgorithm(draw.CurrentGraph);
+            foreach (List<int> l in ListOfStack)
+            {
+                foreach (int number in l)
+                {
+                    finalString = finalString + " " + number;
+                    arrayToCheck[number] = 1;
+                }
+                finalString = finalString + Environment.NewLine;
+            }
+            //jeżeli jakiś wierzchołemk nie miał połączeń to go dopisuje na końcu
+            for (int i = 0; i < size; i++)
+            {
+                if (arrayToCheck[i] == 0)
+                    finalString = finalString + " " + i + Environment.NewLine;
+            }
+            MessageBox.Show(finalString, "Silne składowe");
         }
 
         private void btnJohnson_Click(object sender, RoutedEventArgs e)
         {
-            if (!Johnson.isEveryNodeConnected(draw.CurrentGraph))
+            List<List<int>> ListOfStack = Kosaraju.KosarajuAlgorithm(draw.CurrentGraph);
+            if (ListOfStack[0].Count!=draw.CurrentGraph.Nodes.Count)
             {
-                MessageBox.Show("Uzyty graf musi byc spojny!", "Błąd!");
+                MessageBox.Show("Uzyty graf musi byc silnie spojny!", "Błąd!");
                 return;
             }
 
